@@ -9,7 +9,11 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class UserLayoutComponent {
   mobileQuery: MediaQueryList;
 
-  fillerNav = Array.from({ length: 50 }, (_, i) => `Nav Item ${i + 1}`);
+  fillerNav = [
+    { link: 'all-pdfs', text: 'All PDFs' },
+    { link: 'subjects', text: 'Subjects' },
+    { link: 'classes', text: 'Classes' },
+  ];
 
   options = {
     bottom: 0,
