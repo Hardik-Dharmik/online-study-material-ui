@@ -5,6 +5,11 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { SupabaseClient, createClient } from '@supabase/supabase-js';
+import { environment } from '../../../environments/environment'
+import { Router } from '@angular/router';
+import { SupabaseAuthService } from 'src/app/services/supabase/supabase-auth.service';
+
 
 export type LoginCredentials = {
   email: string;
@@ -17,8 +22,23 @@ export type LoginCredentials = {
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent {
+  private supabase: SupabaseClient;
+  
   loginForm!: UntypedFormGroup;
   errorMessage = signal('');
+
+  constructor(
+    private router: Router,
+    private supabaseAuthService: SupabaseAuthService
+  ) {
+      this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+
+      this.supabaseAuthService.currentUser.subscribe((user) => {
+        if (user) {
+          this.router.navigateByUrl('/dashboard', { replaceUrl: true })
+        }
+      })
+  }
 
   ngOnInit() {
     this.loginForm = new UntypedFormGroup({
@@ -46,5 +66,27 @@ export class LoginFormComponent {
     }
 
     return 'Password is required';
+  }
+
+  async signUp(){
+    if(this.loginForm.invalid) {
+      return;
+    }
+
+    const { data, error } = await this.supabase.auth.signUp(this.loginForm.getRawValue() as LoginCredentials);    
+  }
+
+  async login() {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    const { data, error } = await this.supabase.auth.signInWithPassword(this.loginForm.getRawValue() as LoginCredentials);
+
+    console.log(data, error);
+  }
+
+  gotoSignUp() {
+    this.router.navigate(['/signup']);
   }
 }

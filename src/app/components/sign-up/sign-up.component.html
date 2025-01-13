@@ -1,26 +1,26 @@
 <div class="login-container">
-    <h2>Login</h2>
+    <h2>Signup</h2>
 
-    <form [formGroup]="loginForm" class="login-form">
+    <form [formGroup]="signUpForm" class="login-form">
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" required />
-            <mat-error *ngIf="loginForm.get('email')?.invalid">{{getEmailErrorMessage()}}</mat-error>
+            <mat-error *ngIf="signUpForm.get('email')?.invalid">{{getEmailErrorMessage()}}</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mt-2">
             <mat-label>Password</mat-label>
             <input matInput formControlName="password" required />
-            <mat-error *ngIf="loginForm.get('password')?.invalid">{{getPasswordErrorMessage()}}</mat-error>
+            <mat-error *ngIf="signUpForm.get('password')?.invalid">{{getPasswordErrorMessage()}}</mat-error>
         </mat-form-field>
 
         <div class="flex justify-center mt-2">
-            <button mat-raised-button (click)="login()" class="w-1/2">Login</button>
+            <button mat-raised-button (click)="login()" class="w-1/2">Signup</button>
         </div>
 
         <div class="flex justify-center items-center mt-2">
-            <span>Don't have an account ? </span>
-            <a mat-button (click)="gotoSignUp()">Signup</a>
+            <span>Already have an account ? </span>
+            <a mat-button (click)="goToLogin()">Login</a>
         </div>
     </form>
 </div>

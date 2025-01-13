@@ -10,6 +10,7 @@ export class UserLayoutComponent {
   mobileQuery: MediaQueryList;
 
   fillerNav = [
+    { link: 'profile', text: 'Profile' },
     { link: 'all-pdfs', text: 'All PDFs' },
     { link: 'subjects', text: 'Subjects' },
     { link: 'classes', text: 'Classes' },

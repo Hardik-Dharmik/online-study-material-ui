@@ -12,9 +12,11 @@ import { UserDashboardComponent } from './dashboards/user-dashboard/user-dashboa
 import { AllPdfsComponent } from './components/all-pdfs/all-pdfs.component';
 import { SubjectsComponent } from './components/subjects/subjects.component';
 import { ClassesComponent } from './components/classes/classes.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent],
+  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
