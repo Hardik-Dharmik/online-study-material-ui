@@ -85,10 +85,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "online-study-material:build:production"
+              "buildTarget": "online-study-material:build:production"
             },
             "development": {
-              "browserTarget": "online-study-material:build:development"
+              "buildTarget": "online-study-material:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -96,7 +96,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "online-study-material:build"
+            "buildTarget": "online-study-material:build"
           }
         },
         "test": {
