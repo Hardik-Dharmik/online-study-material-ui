@@ -3,7 +3,19 @@ mat-sidenav {
 }
 
 mat-toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logout-btn {
+  display: flex !important;
+  align-self: center;
+}
+
+.profile-btn {
+  border-radius: 99999px !important;
+  background: #3f51b5;
+  color: white;
+  padding: 0.5rem;
 }

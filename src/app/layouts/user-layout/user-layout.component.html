@@ -1,9 +1,15 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-    <mat-toolbar color="primary" class="example-toolbar">
-        <button mat-icon-button (click)="snav.toggle()">
-            <mat-icon>menu</mat-icon>
+    <mat-toolbar color="primary" class="example-toolbar flex justify-between items-center">
+        <div class="flex items-center">
+            <button mat-icon-button (click)="snav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <h1 class="example-app-name">Online Study Material</h1>
+        </div>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
         </button>
-        <h1 class="example-app-name">Online Study Material</h1>
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container">
@@ -21,3 +27,14 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
+
+<mat-menu #menu="matMenu" class="flex flex-col items-center p-3 gap-3">
+    <div class="flex flex-col items-center gap-y-2">
+        <span class="profile-btn">HD</span>
+        <span>Hardik Dharmik</span>
+    </div>
+    <div class="flex items-center justify-center flex-col gap-y-2">
+        <button class="text-sm" (click)="goToProfile()">View Profile</button>
+        <button mat-raised-button (click)="logout()" class="mt-3 logout-btn mx-auto">Logout</button>
+    </div>
+</mat-menu>

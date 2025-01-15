@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { SupabaseAuthService } from 'src/app/services/supabase/supabase-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-layout',
@@ -10,7 +12,6 @@ export class UserLayoutComponent {
   mobileQuery: MediaQueryList;
 
   fillerNav = [
-    { link: 'profile', text: 'Profile' },
     { link: 'all-pdfs', text: 'All PDFs' },
     { link: 'subjects', text: 'Subjects' },
     { link: 'classes', text: 'Classes' },
@@ -34,7 +35,7 @@ export class UserLayoutComponent {
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private supabaseAuthService: SupabaseAuthService, private router: Router) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -42,5 +43,13 @@ export class UserLayoutComponent {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  logout() {
+    this.supabaseAuthService.signOut();
+  }
+
+  goToProfile() {
+    this.router.navigateByUrl('dashboard/profile');
   }
 }

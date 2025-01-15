@@ -68,6 +68,14 @@ export class LoginFormComponent {
     return 'Password is required';
   }
 
+  get email() {
+    return this.loginForm.get('email') as UntypedFormControl;
+  }
+
+  get password() {
+    return this.loginForm.get('password') as UntypedFormControl;
+  }
+
   async signUp(){
     if(this.loginForm.invalid) {
       return;

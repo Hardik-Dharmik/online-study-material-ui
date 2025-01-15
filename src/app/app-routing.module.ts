@@ -19,13 +19,11 @@ const routes: Routes = [
     path: 'login',
     component: LoginFormComponent,
     pathMatch: 'full',
-
   },
   {
     path: 'signup',
     component: SignUpComponent,
     pathMatch: 'full',
-
   },
   {
     path: 'dashboard',
@@ -44,4 +42,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
