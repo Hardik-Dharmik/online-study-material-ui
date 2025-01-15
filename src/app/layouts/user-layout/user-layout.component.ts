@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 })
 export class UserLayoutComponent {
   mobileQuery: MediaQueryList;
+  user$: any = this.supabaseAuthService.currentUser;
+  email: string = '';
 
   fillerNav = [
     { link: 'all-pdfs', text: 'All PDFs' },
@@ -39,6 +41,12 @@ export class UserLayoutComponent {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  ngOnInit() {
+    this.user$.subscribe((user: any) => {
+      this.email = user?.email;
+    });
   }
 
   ngOnDestroy(): void {
