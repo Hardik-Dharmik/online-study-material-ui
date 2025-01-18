@@ -5,10 +5,9 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { SupabaseClient, createClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment'
 import { Router } from '@angular/router';
-import { SupabaseAuthService } from 'src/app/services/supabase/supabase-auth.service';
+import { SupabaseSingleton } from 'src/app/classes/Supabase';
 
 
 export type LoginCredentials = {
@@ -22,22 +21,14 @@ export type LoginCredentials = {
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent {
-  private supabase: SupabaseClient;
-  
+
   loginForm!: UntypedFormGroup;
+  supabase: any;
   errorMessage = signal('');
 
   constructor(
     private router: Router,
-    private supabaseAuthService: SupabaseAuthService
   ) {
-      this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-
-      this.supabaseAuthService.currentUser.subscribe((user) => {
-        if (user) {
-          this.router.navigateByUrl('/dashboard', { replaceUrl: true })
-        }
-      })
   }
 
   ngOnInit() {
@@ -48,6 +39,7 @@ export class LoginFormComponent {
       ]),
       password: new UntypedFormControl('', [Validators.required]),
     });
+    this.supabase = SupabaseSingleton.getInstance();
   }
 
   getEmailErrorMessage() {
@@ -76,13 +68,13 @@ export class LoginFormComponent {
     return this.loginForm.get('password') as UntypedFormControl;
   }
 
-  async signUp(){
-    if(this.loginForm.invalid) {
-      return;
-    }
+  // async signUp() {
+  //   if (this.loginForm.invalid) {
+  //     return;
+  //   }
 
-    const { data, error } = await this.supabase.auth.signUp(this.loginForm.getRawValue() as LoginCredentials);    
-  }
+  //   const { data, error } = await this.supabase.auth.signUp(this.loginForm.getRawValue() as LoginCredentials);
+  // }
 
   async login() {
     if (this.loginForm.invalid) {
@@ -91,7 +83,11 @@ export class LoginFormComponent {
 
     const { data, error } = await this.supabase.auth.signInWithPassword(this.loginForm.getRawValue() as LoginCredentials);
 
-    console.log(data, error);
+    localStorage.setItem("user", JSON.stringify(data));
+
+    if (!error) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   gotoSignUp() {

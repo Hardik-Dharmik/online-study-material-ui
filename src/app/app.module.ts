@@ -14,18 +14,23 @@ import { SubjectsComponent } from './components/subjects/subjects.component';
 import { ClassesComponent } from './components/classes/classes.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PrimeNGModule } from './primeng/primeng.module';
+import { PdfFormComponent } from './components/pdfs/pdf-form/pdf-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent],
+  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent, PdfFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MaterialModule,
+    PrimeNGModule
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

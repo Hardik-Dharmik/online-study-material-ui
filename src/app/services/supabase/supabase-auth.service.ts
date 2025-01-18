@@ -10,6 +10,7 @@ import {
 import { environment } from '../../../environments/environment'
 import { BehaviorSubject } from 'rxjs'
 import { Router } from '@angular/router'
+import { SupabaseSingleton } from 'src/app/classes/Supabase'
 
 export interface Profile {
   id?: string
@@ -30,7 +31,7 @@ export class SupabaseAuthService {
   constructor(
     private router: Router,
   ) {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    this.supabase = SupabaseSingleton.getInstance();
 
     // Manually load user session once on page load
     // Note: This becomes a promise with getUser() in the next version!
@@ -43,7 +44,8 @@ export class SupabaseAuthService {
 
     this.supabase.auth.onAuthStateChange((event, session) => {
       if (event == 'SIGNED_IN') {
-        this._currentUser.next(session!.user)
+        this._currentUser.next(session!.user);
+        this.router.navigateByUrl('/dashboard', { replaceUrl: true })
       } else {
         this._currentUser.next(false)
         this.router.navigateByUrl('/', { replaceUrl: true })

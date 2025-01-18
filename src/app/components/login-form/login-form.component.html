@@ -10,7 +10,7 @@
 
         <mat-form-field class="mt-2">
             <mat-label>Password</mat-label>
-            <input matInput formControlName="password" required />
+            <input matInput type="password" formControlName="password" required />
             <mat-error *ngIf="loginForm.get('password')?.invalid">{{getPasswordErrorMessage()}}</mat-error>
         </mat-form-field>
 

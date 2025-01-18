@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { SupabaseAuthService } from 'src/app/services/supabase/supabase-auth.service';
+// import { SupabaseAuthService } from 'src/app/services/supabase/supabase-auth.service';
 import { Router } from '@angular/router';
+import { SupabaseSingleton } from 'src/app/classes/Supabase';
 
 @Component({
   selector: 'app-user-layout',
@@ -10,13 +11,16 @@ import { Router } from '@angular/router';
 })
 export class UserLayoutComponent {
   mobileQuery: MediaQueryList;
-  user$: any = this.supabaseAuthService.currentUser;
+  supabase: any;
   email: string = '';
+
+  router = inject(Router);
 
   fillerNav = [
     { link: 'all-pdfs', text: 'All PDFs' },
     { link: 'subjects', text: 'Subjects' },
     { link: 'classes', text: 'Classes' },
+    { link: 'add-pdf', text: 'Add PDF' },
   ];
 
   options = {
@@ -37,24 +41,29 @@ export class UserLayoutComponent {
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private supabaseAuthService: SupabaseAuthService, private router: Router) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit() {
-    this.user$.subscribe((user: any) => {
-      this.email = user?.email;
-    });
+    this.supabase = SupabaseSingleton.getInstance();
+    this.email = JSON.parse(localStorage.getItem('user') || '{}').user.email;
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-  logout() {
-    this.supabaseAuthService.signOut();
+  async logout() {
+    const { error } = await this.supabase.auth.signOut()
+
+    if (!error) {
+      localStorage.clear();
+      this.router.navigateByUrl('/login');
+    }
+
   }
 
   goToProfile() {

@@ -1,0 +1,63 @@
+<h3>Add PDF</h3>
+<form class="flex flex-col gap-3" [formGroup]="pdfForm">
+    <div class="flex flex-col md:flex-row gap-3">
+        <mat-form-field class="w-full lg:w-1/2">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type" required>
+                @for (fileType of fileTypeOptions; track fileType) {
+                <mat-option [value]="fileType.value">{{fileType.text}}</mat-option>
+                }
+            </mat-select>
+            <mat-error *ngIf="pdfForm.get('type')?.invalid">{{getErrorMessage("type")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full lg:w-1/2">
+            <mat-label>Standard</mat-label>
+            <mat-select formControlName="standard" (valueChange)="onStandardChange($event)" required>
+                @for (standard of standardOptions; track standard) {
+                <mat-option [value]="standard.value">{{standard.text}}</mat-option>
+                }
+            </mat-select>
+            <mat-error *ngIf="pdfForm.get('standard')?.invalid">{{getErrorMessage("standard")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full lg:w-1/2">
+            <mat-label>Subject</mat-label>
+            <mat-select formControlName="subject" required>
+                @for (subject of subjectOptions; track subject) {
+                <mat-option [value]="subject.value">{{subject.text}}</mat-option>
+                }
+            </mat-select>
+            <mat-error *ngIf="pdfForm.get('subject')?.invalid">{{getErrorMessage("subject")}}</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-3">
+        <mat-form-field class="w-full lg:w-1/2">
+            <mat-label>File name</mat-label>
+            <input matInput formControlName="filename" required>
+            <mat-error *ngIf="pdfForm.get('filename')?.hasError('required')">{{getErrorMessage("filename")}}</mat-error>
+            <mat-error *ngIf="pdfForm.get('filename')?.hasError('alreadyExistingFileName')">File name already
+                exists</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full lg:w-1/2">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" required>
+            <mat-error *ngIf="pdfForm.get('description')?.invalid">{{getErrorMessage("description")}}</mat-error>
+        </mat-form-field>
+
+        <div class="w-full lg:w-1/2 mt-0 md:mt-4">
+            <div class="flex items-baseline gap-3">
+                <label for="file-upload" class="custom-file-upload">
+                    Select PDF file
+                </label>
+                <p class="file-name">{{fileName}}</p>
+            </div>
+            <input id="file-upload" type="file" (change)="onUpload($event)" formControlName="file" required />
+        </div>
+    </div>
+    <div class="flex justify-end">
+        <button mat-raised-button color="primary" class="items-end" (click)="uploadFile()">Save</button>
+    </div>
+</form>

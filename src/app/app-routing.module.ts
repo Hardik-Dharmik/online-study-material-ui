@@ -8,12 +8,14 @@ import { UserDashboardComponent } from './dashboards/user-dashboard/user-dashboa
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PdfFormComponent } from './components/pdfs/pdf-form/pdf-form.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginFormComponent,
     pathMatch: 'full',
+    redirectTo: 'dashboard'
   },
   {
     path: 'login',
@@ -28,12 +30,14 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: UserLayoutComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', component: UserDashboardComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'all-pdfs', component: AllPdfsComponent },
       { path: 'subjects', component: SubjectsComponent },
       { path: 'classes', component: ClassesComponent },
+      { path: 'add-pdf', component: PdfFormComponent },
     ],
   },
 ];
