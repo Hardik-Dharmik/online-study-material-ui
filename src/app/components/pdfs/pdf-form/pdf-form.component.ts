@@ -45,12 +45,12 @@ export class PdfFormComponent {
     this.getAlreadyExistingFileName();
 
     this.pdfForm = new UntypedFormGroup({
-      filename: new UntypedFormControl(null, [Validators.required, uniqueFileNameValidator(this.alreadyExistingFileName)]),
-      type: new UntypedFormControl(null, [Validators.required]),
-      standard: new UntypedFormControl(null, [Validators.required]),
-      subject: new UntypedFormControl(null, [Validators.required]),
-      description: new UntypedFormControl(null, [Validators.required]),
-      file: new UntypedFormControl(null, [Validators.required]),
+      filename: new UntypedFormControl('', [Validators.required, uniqueFileNameValidator(this.alreadyExistingFileName)]),
+      type: new UntypedFormControl('', [Validators.required]),
+      standard: new UntypedFormControl('', [Validators.required]),
+      subject: new UntypedFormControl('', [Validators.required]),
+      description: new UntypedFormControl('', [Validators.required]),
+      file: new UntypedFormControl('', [Validators.required]),
     });
   }
 
@@ -83,7 +83,7 @@ export class PdfFormComponent {
     // Get the selected file
     const [file] = event.target.files;
     // Get the file name and size
-    const { name: fileName, size } = file;
+    const { name: fileName } = file;
     this.file = file;
     this.fileName = fileName
   }
@@ -108,8 +108,34 @@ export class PdfFormComponent {
     const formValue = this.pdfForm.getRawValue();
     delete formValue.file;
 
-    this.supabase.from("pdfs").insert([formValue]).then((response) => {
-      console.log(response);
+    this.supabase.from("pdfs").insert([{ ...formValue, fileURL: this.fileName }]).then((response) => {
+      if (response.error) {
+        this._snackBar.open(response.error.message, "Ok");
+      } else {
+        this._snackBar.open("PDF uploaded successfully", "Ok");
+        this.resetForm();
+      }
     });
   }
+
+  resetForm() {
+    this.pdfForm.markAsUntouched();
+    this.pdfForm.markAsPristine();
+    this.pdfForm.controls['filename'].reset('');
+    this.pdfForm.controls['type'].reset('');
+    this.pdfForm.controls['standard'].reset('');
+    this.pdfForm.controls['subject'].reset('');
+    this.pdfForm.controls['description'].reset('');
+    this.pdfForm.controls['file'].reset('');
+
+    Object.keys(this.pdfForm.controls).forEach(controlName => {
+      this.pdfForm.controls[controlName].setErrors(null);
+      this.pdfForm.controls[controlName].markAsPristine();
+      this.pdfForm.controls[controlName].markAsUntouched();
+    });
+
+    this.file = null;
+    this.fileName = '';
+  }
+
 }
