@@ -17,9 +17,15 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PrimeNGModule } from './primeng/primeng.module';
 import { PdfFormComponent } from './components/pdfs/pdf-form/pdf-form.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AllPdfTableComponent } from './components/all-pdfs/all-pdf-table/all-pdf-table.component';
+import { AllPdfListComponent } from './components/all-pdfs/all-pdf-list/all-pdf-list.component';
+import { PdfExpansionContentComponent } from './components/all-pdfs/all-pdf-list/pdf-expansion-content/pdf-expansion-content.component';
+import { PdfPreviewDialogComponent } from './components/all-pdfs/all-pdf-list/pdf-expansion-content/pdf-preview-dialog/pdf-preview-dialog.component';
+import { ExamplePdfViewerComponent } from './example-pdf-viewer/example-pdf-viewer.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
-  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent, PdfFormComponent],
+  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent, PdfFormComponent, AllPdfTableComponent, AllPdfListComponent, PdfExpansionContentComponent, PdfPreviewDialogComponent, ExamplePdfViewerComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,7 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
-    PrimeNGModule
+    PrimeNGModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

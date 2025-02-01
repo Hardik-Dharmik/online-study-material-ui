@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
+
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -20,12 +21,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
   { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
 ];
+
 @Component({
-  selector: 'app-all-pdfs',
-  templateUrl: './all-pdfs.component.html',
-  styleUrls: ['./all-pdfs.component.scss'],
+  selector: 'all-pdf-table',
+  templateUrl: './all-pdf-table.component.html',
+  styleUrl: './all-pdf-table.component.scss'
 })
-export class AllPdfsComponent {
+export class AllPdfTableComponent {
   supabase: SupabaseClient;
   displayedColumns: string[] = ['serialNumber', 'filename', 'standard', 'subject', 'type'];
   dataSource = ELEMENT_DATA;
@@ -56,5 +58,4 @@ export class AllPdfsComponent {
 
     console.log(this.allPdfs);
   }
-
 }
