@@ -1,8 +1,9 @@
 <p class="font-medium">Standard: {{pdf.standard}}</p>
 <p class="font-medium">
     Type:
-    <span class="rounded-lg bg-blue-300 py-1 px-2">
-        {{pdf.type}}
+    <span
+        [ngClass]="{'rounded-lg py-1 px-2': true, 'bg-blue-300': pdf.type === 'paper', 'bg-amber-200': pdf.type === 'bank'}">
+        {{pdf.type | uppercase}}
     </span>
 </p>
 <p class="font-medium">Subject: {{pdf.subject}}</p>
