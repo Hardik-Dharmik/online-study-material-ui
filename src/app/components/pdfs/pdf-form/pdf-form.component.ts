@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
@@ -13,7 +13,7 @@ import { uniqueFileNameValidator } from 'src/app/forms/validators/uniqueFileName
   templateUrl: './pdf-form.component.html',
   styleUrl: './pdf-form.component.scss'
 })
-export class PdfFormComponent {
+export class PdfFormComponent implements OnInit {
   supabase: SupabaseClient;
   fileName = '';
   file: any = null;

@@ -1,15 +1,15 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 
 @Component({
-  selector: 'pdf-preview-dialog',
+  selector: 'app-pdf-preview-dialog',
   templateUrl: './pdf-preview-dialog.component.html',
   styleUrl: './pdf-preview-dialog.component.scss'
 })
-export class PdfPreviewDialogComponent {
-  fileURL: string = '';
+export class PdfPreviewDialogComponent implements OnInit {
+  fileURL = '';
   supabase: SupabaseClient;
 
 

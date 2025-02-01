@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'all-pdf-list',
+  selector: 'app-all-pdf-list',
   templateUrl: './all-pdf-list.component.html',
   styleUrl: './all-pdf-list.component.scss'
 })

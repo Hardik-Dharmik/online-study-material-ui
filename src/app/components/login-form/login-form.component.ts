@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import {
   FormControl,
   UntypedFormControl,
@@ -10,17 +10,17 @@ import { Router } from '@angular/router';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 
 
-export type LoginCredentials = {
+export interface LoginCredentials {
   email: string;
   password: string;
-};
+}
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit {
 
   loginForm!: UntypedFormGroup;
   supabase: any;

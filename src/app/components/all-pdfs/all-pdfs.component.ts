@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 export interface PeriodicElement {
@@ -25,7 +25,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './all-pdfs.component.html',
   styleUrls: ['./all-pdfs.component.scss'],
 })
-export class AllPdfsComponent {
+export class AllPdfsComponent implements OnInit {
   supabase: SupabaseClient;
   displayedColumns: string[] = ['serialNumber', 'filename', 'standard', 'subject', 'type'];
   dataSource = ELEMENT_DATA;

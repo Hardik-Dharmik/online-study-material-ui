@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 // import { SupabaseAuthService } from 'src/app/services/supabase/supabase-auth.service';
 import { Router } from '@angular/router';
@@ -9,10 +9,10 @@ import { SupabaseSingleton } from 'src/app/classes/Supabase';
   templateUrl: './user-layout.component.html',
   styleUrls: ['./user-layout.component.scss'],
 })
-export class UserLayoutComponent {
+export class UserLayoutComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   supabase: any;
-  email: string = '';
+  email = '';
 
   router = inject(Router);
 

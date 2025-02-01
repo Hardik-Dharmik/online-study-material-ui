@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { LoginCredentials } from '../login-form/login-form.component';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
 
   signUpForm!: UntypedFormGroup;
   errorMessage = signal('');
