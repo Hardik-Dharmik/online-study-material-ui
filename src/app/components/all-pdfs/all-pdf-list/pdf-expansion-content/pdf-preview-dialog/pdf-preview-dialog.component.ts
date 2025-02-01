@@ -26,7 +26,7 @@ export class PdfPreviewDialogComponent implements OnInit {
     const { data, error } = await this.supabase
       .storage
       .from('pdfs')
-      .createSignedUrl(this.fileURL, 60);
+      .createSignedUrl(this.fileURL, 3600);
 
     this.fileURL = data?.signedUrl || ''
 
