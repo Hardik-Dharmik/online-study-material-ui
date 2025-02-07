@@ -92,8 +92,8 @@ export class PdfPreviewDialogComponent implements OnInit {
       const pdfBytes = await newPdfDoc.save();
       console.log(pdfBytes, newPdfDoc);
 
-      let bytes = new Uint8Array(pdfBytes.length);
-      for (var i = 0; i < pdfBytes.length; i++) {
+      const bytes = new Uint8Array(pdfBytes.length);
+      for (let i = 0; i < pdfBytes.length; i++) {
         bytes[i] = pdfBytes[i];
       }
 
@@ -103,7 +103,7 @@ export class PdfPreviewDialogComponent implements OnInit {
       const blob = new Blob([bytes], { type: 'application/pdf' });
       console.log(blob);
       // console.log(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob)));
-      var file_object = new File([blob], "file_name.pdf", { type: 'application/pdf' });
+      const file_object = new File([blob], "file_name.pdf", { type: 'application/pdf' });
       console.log(file_object);
       this.fileURL = URL.createObjectURL(file_object);
 

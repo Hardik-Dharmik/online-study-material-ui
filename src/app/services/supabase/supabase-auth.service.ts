@@ -31,8 +31,6 @@ export class SupabaseAuthService {
   ) {
     this.supabase = SupabaseSingleton.getInstance();
 
-    // Manually load user session once on page load
-    // Note: This becomes a promise with getUser() in the next version!
     const user = this.supabase.auth.getUser()
     if (user) {
       this._currentUser.next(user)

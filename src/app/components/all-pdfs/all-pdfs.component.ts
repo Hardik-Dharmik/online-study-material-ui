@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 export interface PeriodicElement {
@@ -26,14 +27,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./all-pdfs.component.scss'],
 })
 export class AllPdfsComponent implements OnInit {
+  mobileQuery: MediaQueryList;
   supabase: SupabaseClient;
   displayedColumns: string[] = ['serialNumber', 'filename', 'standard', 'subject', 'type'];
   dataSource = ELEMENT_DATA;
   allPdfs: any = [];
 
+  private _mobileQueryListener: () => void;
+
   constructor(
+    changeDetectorRef: ChangeDetectorRef, media: MediaMatcher
   ) {
     this.supabase = SupabaseSingleton.getInstance();
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit() {

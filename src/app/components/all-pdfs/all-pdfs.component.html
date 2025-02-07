@@ -1,3 +1,4 @@
 <h3>All PDFs</h3>
 
-<app-all-pdf-list [allPdfs]="allPdfs"></app-all-pdf-list>
+<app-all-pdf-list *ngIf="mobileQuery.matches" [allPdfs]="allPdfs"></app-all-pdf-list>
+<app-all-pdf-table *ngIf="!mobileQuery.matches" [allPdfs]="allPdfs"></app-all-pdf-table>

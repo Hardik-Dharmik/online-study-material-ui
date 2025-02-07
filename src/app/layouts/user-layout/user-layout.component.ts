@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-// import { SupabaseAuthService } from 'src/app/services/supabase/supabase-auth.service';
 import { Router } from '@angular/router';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 

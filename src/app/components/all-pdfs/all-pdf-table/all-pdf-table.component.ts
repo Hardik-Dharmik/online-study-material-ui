@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { PdfPreviewDialogComponent } from '../all-pdf-list/pdf-expansion-content/pdf-preview-dialog/pdf-preview-dialog.component';
+import { PdfService } from 'src/app/services/pdfs/pdf.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 @Component({
@@ -16,10 +14,14 @@ export interface PeriodicElement {
   styleUrl: './all-pdf-table.component.scss'
 })
 export class AllPdfTableComponent implements OnInit {
+  @Input() allPdfs: any[] = [];
+
   supabase: SupabaseClient;
-  displayedColumns: string[] = ['serialNumber', 'filename', 'standard', 'subject', 'type'];
-  dataSource = [];
-  allPdfs: any = [];
+  displayedColumns: string[] = ['serialNumber', 'filename', 'standard', 'subject', 'type', 'actions'];
+  dataSource = new MatTableDataSource<any>(this.allPdfs);
+
+  dialog = inject(MatDialog);
+  pdfService = inject(PdfService);
 
   constructor(
   ) {
@@ -27,20 +29,30 @@ export class AllPdfTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllPdfs();
+    this.addSerialNumberToPdfList();
   }
 
-  async getAllPdfs() {
-    const response = await this.supabase.from("pdfs").select("*");
-    console.log(response);
-    this.allPdfs = response?.data;
-    let serialNumber = 0;
-    this.dataSource = this.allPdfs.map((pdf: any) => {
-      serialNumber++;
-      return {
-        serialNumber,
-        ...pdf,
-      };
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['allPdfs']) {
+      this.addSerialNumberToPdfList();
+    }
+  }
+
+  addSerialNumberToPdfList() {
+    this.dataSource.data = this.pdfService.addSerialNumberToPdfList(this.allPdfs);
+  }
+
+  previewPdf(pdf: any) {
+    const dialogRef = this.dialog.open(PdfPreviewDialogComponent, { data: pdf, minWidth: '350px', width: '80%' });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 }
