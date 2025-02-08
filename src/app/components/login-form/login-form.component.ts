@@ -1,12 +1,12 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, inject } from '@angular/core';
 import {
-  FormControl,
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 export interface LoginCredentials {
@@ -25,8 +25,10 @@ export class LoginFormComponent implements OnInit {
   supabase: any;
   errorMessage = signal('');
 
+  spinner = inject(NgxSpinnerService);
+  router = inject(Router);
+
   constructor(
-    private router: Router,
   ) {
   }
 
@@ -72,11 +74,14 @@ export class LoginFormComponent implements OnInit {
       return;
     }
 
+    this.spinner.show('full');
+
     const { data, error } = await this.supabase.auth.signInWithPassword(this.loginForm.getRawValue() as LoginCredentials);
 
     localStorage.setItem("user", JSON.stringify(data));
 
     if (!error) {
+      this.spinner.hide('full');
       this.router.navigate(['/dashboard']);
     }
   }

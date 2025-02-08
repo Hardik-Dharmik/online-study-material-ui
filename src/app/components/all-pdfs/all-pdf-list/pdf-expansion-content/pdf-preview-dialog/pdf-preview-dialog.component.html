@@ -27,25 +27,11 @@
         <div [class.invisible]="false" id="toolbarViewerMiddle" class="flex">
             <pdf-zoom-dropdown class="invisible"></pdf-zoom-dropdown>
 
-            <input type="radio" id="zoom25" class="toolbarField radio" tabindex="94" (click)="zoom = '25%'" name="zoom"
-                [checked]="zoom==='25%'" />
-            <label for="zoom25" class="toolbarLabel">25%</label>
-
-            <input type="radio" id="zoom50" class="toolbarField radio" tabindex="94" (click)="zoom = '50%'" name="zoom"
-                [checked]="zoom==='50%'" />
-            <label for="zoom50" class="toolbarLabel">50%</label>
-
-            <input type="radio" id="zoom100" class="toolbarField radio" tabindex="95" (click)="zoom = '100%'"
-                name="zoom" [checked]="zoom==='100%'" />
-            <label for="zoom100" class="toolbarLabel">100%</label>
-
-            <input type="radio" id="zoom200" class="toolbarField radio" tabindex="96" (click)="zoom = '200%'"
-                name="zoom" [checked]="zoom==='200%'" />
-            <label for="zoom200" class="toolbarLabel">200%</label>
-
-            <input type="radio" id="zoom-auto" class="toolbarField radio" tabindex="97" (click)="zoom = 'auto'"
-                name="zoom" [checked]="zoom==='auto'" />
-            <label for="zoom-auto" class="toolbarLabel">auto</label>
+            <ng-container *ngFor="let zoomLevel of ['25%', '50%', '100%', '200%', 'auto']; let i = index">
+                <input type="radio" [id]="'zoom' + zoomLevel" class="toolbarField radio" [tabindex]="94 + i"
+                    (click)="zoom = zoomLevel" name="zoom" [checked]="zoom === zoomLevel" />
+                <label [for]="'zoom' + zoomLevel" class="toolbarLabel">{{ zoomLevel }}</label>
+            </ng-container>
         </div>
     </div>
 </ng-template>
