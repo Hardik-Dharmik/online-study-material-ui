@@ -1,5 +1,9 @@
+<mat-form-field class="w-full">
+    <input matInput (keyup)="applyFilter($event.target)" placeholder="Filter">
+</mat-form-field>
+
 <mat-accordion>
-    @for (pdf of allPdfs; track $index) {
+    @for (pdf of pdfs; track $index) {
     <mat-expansion-panel class="my-3" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -10,15 +14,3 @@
     </mat-expansion-panel>
     }
 </mat-accordion>
-
-<!-- {
-    "serialNumber": 1,
-    "id": "72475ec6-ca7b-4ba6-859e-22c778376e72",
-    "created_at": "2025-01-18T16:34:04.361619+00:00",
-    "filename": "Physics.pdf",
-    "standard": "11th",
-    "type": "paper",
-    "subject": "Physics",
-    "description": "Physics paper 1",
-    "fileURL": null
-} -->

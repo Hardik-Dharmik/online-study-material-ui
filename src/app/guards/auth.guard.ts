@@ -14,11 +14,6 @@ export const authGuard: CanActivateFn = async (route, state) => {
     return false;
   }
 
-  console.log(user);
   return true;
 };
-
-function isSuperAdmin(user: User): boolean {
-  return user.app_metadata?.['role']?.includes('super-admin');
-}
 
