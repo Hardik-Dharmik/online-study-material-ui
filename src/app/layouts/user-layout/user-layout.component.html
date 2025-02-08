@@ -15,15 +15,14 @@
     <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" fixedTopGap="56"
             [fixedInViewport]="options.fixed" [fixedTopGap]="options.top" [fixedBottomGap]="options.bottom">
-            <mat-nav-list>
-                <span *ngFor="let nav of fillerNav">
-                    <a mat-list-item routerLink={{nav.link}}>{{nav.text}}</a>
-                </span>
-            </mat-nav-list>
+            <app-sidebar />
         </mat-sidenav>
 
         <mat-sidenav-content class="min-h-screen p-[30px]">
             <router-outlet></router-outlet>
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+                <p style="color: white" name="full"> Loading... </p>
+            </ngx-spinner>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

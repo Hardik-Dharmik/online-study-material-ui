@@ -23,9 +23,11 @@ import { PdfExpansionContentComponent } from './components/all-pdfs/all-pdf-list
 import { PdfPreviewDialogComponent } from './components/all-pdfs/all-pdf-list/pdf-expansion-content/pdf-preview-dialog/pdf-preview-dialog.component';
 import { ExamplePdfViewerComponent } from './example-pdf-viewer/example-pdf-viewer.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent, PdfFormComponent, AllPdfTableComponent, AllPdfListComponent, PdfExpansionContentComponent, PdfPreviewDialogComponent, ExamplePdfViewerComponent],
+  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent, PdfFormComponent, AllPdfTableComponent, AllPdfListComponent, PdfExpansionContentComponent, PdfPreviewDialogComponent, ExamplePdfViewerComponent, SidebarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,7 +37,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     HttpClientModule,
     MaterialModule,
     PrimeNGModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-atom' })
   ],
   providers: [],
   bootstrap: [AppComponent],

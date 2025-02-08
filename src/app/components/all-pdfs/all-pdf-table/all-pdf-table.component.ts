@@ -23,6 +23,8 @@ export class AllPdfTableComponent implements OnInit {
   dialog = inject(MatDialog);
   pdfService = inject(PdfService);
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(
   ) {
     this.supabase = SupabaseSingleton.getInstance();
@@ -31,8 +33,6 @@ export class AllPdfTableComponent implements OnInit {
   ngOnInit() {
     this.addSerialNumberToPdfList();
   }
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -46,6 +46,13 @@ export class AllPdfTableComponent implements OnInit {
 
   addSerialNumberToPdfList() {
     this.dataSource.data = this.pdfService.addSerialNumberToPdfList(this.allPdfs);
+  }
+
+  applyFilter(event: any) {
+    let filterValue = event?.value
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
   previewPdf(pdf: any) {

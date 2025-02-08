@@ -1,5 +1,15 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" [name]="'pdf'">
+    <p style="color: white"> Loading PDF... </p>
+</ngx-spinner>
+
 <div class="flex flex-row justify-between items-center">
-    <h2 mat-dialog-title>Preview</h2>
+    <div>
+        <h2 mat-dialog-title>Preview</h2>
+        <div class="ml-4">
+            <h5 class="my-1">Only 1<sup>st</sup> page of pdf will be visible. </h5>
+            <h5 class="my-1">Purchase pdf to get complete access.</h5>
+        </div>
+    </div>
     <mat-icon class="mr-4" mat-dialog-close>close</mat-icon>
 </div>
 <mat-dialog-content class="mat-typography">

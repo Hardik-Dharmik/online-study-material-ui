@@ -5,7 +5,6 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { environment } from '../../../environments/environment'
 import { Router } from '@angular/router';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 
@@ -67,14 +66,6 @@ export class LoginFormComponent implements OnInit {
   get password() {
     return this.loginForm.get('password') as UntypedFormControl;
   }
-
-  // async signUp() {
-  //   if (this.loginForm.invalid) {
-  //     return;
-  //   }
-
-  //   const { data, error } = await this.supabase.auth.signUp(this.loginForm.getRawValue() as LoginCredentials);
-  // }
 
   async login() {
     if (this.loginForm.invalid) {

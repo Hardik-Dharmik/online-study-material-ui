@@ -15,13 +15,6 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
 
   router = inject(Router);
 
-  fillerNav = [
-    { link: 'all-pdfs', text: 'All PDFs' },
-    { link: 'subjects', text: 'Subjects' },
-    { link: 'classes', text: 'Classes' },
-    { link: 'add-pdf', text: 'Add PDF' },
-  ];
-
   options = {
     bottom: 0,
     fixed: false,

@@ -2,3 +2,8 @@
 
 <app-all-pdf-list *ngIf="mobileQuery.matches" [allPdfs]="allPdfs"></app-all-pdf-list>
 <app-all-pdf-table *ngIf="!mobileQuery.matches" [allPdfs]="allPdfs"></app-all-pdf-table>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-atom" [fullScreen]="true"
+    [name]="'full'">
+    <p style="color: white" name="full"> Loading... </p>
+</ngx-spinner>

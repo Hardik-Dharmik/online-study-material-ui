@@ -1,0 +1,6 @@
+<mat-nav-list>
+    <span *ngFor="let nav of menuItems" class="ps-5 flex items-center justify-items-center">
+        <mat-icon mat-list-icon>{{nav.icon}}</mat-icon>
+        <a mat-list-item routerLink={{nav.link}}>{{nav.text}}</a>
+    </span>
+</mat-nav-list>
