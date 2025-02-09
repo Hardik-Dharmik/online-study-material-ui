@@ -23,3 +23,9 @@ mat-toolbar {
   align-items: center;
   justify-content: center;
 }
+
+.sidebar-links .s-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem !important;
+}

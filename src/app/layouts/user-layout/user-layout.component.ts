@@ -2,6 +2,9 @@ import { ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angula
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
+import { SidebarMenu } from '../sidebar/routes.constant';
+import { UserService } from 'src/app/services/user/user.service';
+import { fillerNav } from 'src/app/constants/sidebar-menus.constant';
 
 @Component({
   selector: 'app-user-layout',
@@ -12,7 +15,9 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   supabase: any;
   email = '';
+  menuItems: SidebarMenu[] = fillerNav;
 
+  userService = inject(UserService);
   router = inject(Router);
 
   options = {
@@ -20,16 +25,6 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     fixed: false,
     top: 0,
   };
-
-  fillerContent = Array.from(
-    { length: 50 },
-    () =>
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-  );
 
   private _mobileQueryListener: () => void;
 
@@ -61,4 +56,9 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
   goToProfile() {
     this.router.navigateByUrl('dashboard/profile');
   }
+
+  handleRouting(link: string) {
+    console.log(link);
+  }
+
 }

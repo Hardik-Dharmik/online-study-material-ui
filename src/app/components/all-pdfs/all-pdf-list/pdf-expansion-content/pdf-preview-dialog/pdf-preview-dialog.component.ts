@@ -37,4 +37,5 @@ export class PdfPreviewDialogComponent implements OnInit {
     this.fileURL = data?.signedUrl || '';
     this.spinner.hide('pdf');
   }
+
 }

@@ -14,7 +14,8 @@
 </div>
 <mat-dialog-content class="mat-typography">
     <ngx-extended-pdf-viewer [src]="fileURL" [customToolbar]="customCheckboxZoomToolbar" [textLayer]="false"
-        [showZoomButtons]="true" [zoom]="zoom" [className]="'klknuibiubui'" [page]="1"></ngx-extended-pdf-viewer>
+        [showZoomButtons]="true" [zoom]="zoom" [className]="'klknuibiubui'" [page]="1"
+        [pageViewMode]="'single'"></ngx-extended-pdf-viewer>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>

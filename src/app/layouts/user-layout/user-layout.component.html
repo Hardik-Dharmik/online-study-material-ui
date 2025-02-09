@@ -15,7 +15,17 @@
     <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" fixedTopGap="56"
             [fixedInViewport]="options.fixed" [fixedTopGap]="options.top" [fixedBottomGap]="options.bottom">
-            <app-sidebar />
+            <mat-nav-list>
+                <ng-container *ngFor="let nav of menuItems">
+                    <a mat-list-item routerLink={{nav.link}} (click)="mobileQuery.matches && snav.close()"
+                        class="sidebar-links">
+                        <span class="s-link">
+                            <mat-icon>{{nav.icon}}</mat-icon>
+                            <span>{{nav.text}}</span>
+                        </span>
+                    </a>
+                </ng-container>
+            </mat-nav-list>
         </mat-sidenav>
 
         <mat-sidenav-content class="min-h-screen p-[30px]">

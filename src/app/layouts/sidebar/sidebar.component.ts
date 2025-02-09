@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class SidebarComponent {
   menuItems: SidebarMenu[] = fillerNav;
 
-  userService = inject(UserService)
+  userService = inject(UserService);
 
   ngOnInit() {
     this.initMenu();
