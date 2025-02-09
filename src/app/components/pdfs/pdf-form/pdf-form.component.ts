@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
@@ -25,6 +25,8 @@ export class PdfFormComponent implements OnInit {
 
   alreadyExistingFileName: any = [];
 
+  _snackBar = inject(MatSnackBar);
+
   errorMessages: any = {
     "filename": "Filename is required",
     "type": "Type is required",
@@ -36,7 +38,6 @@ export class PdfFormComponent implements OnInit {
   pdfForm!: UntypedFormGroup;
 
   constructor(
-    private _snackBar: MatSnackBar
   ) {
     this.supabase = SupabaseSingleton.getInstance();
   }
@@ -80,9 +81,7 @@ export class PdfFormComponent implements OnInit {
   }
 
   onUpload(event: any) {
-    // Get the selected file
     const [file] = event.target.files;
-    // Get the file name and size
     const { name: fileName } = file;
     this.file = file;
     this.fileName = fileName
@@ -98,7 +97,6 @@ export class PdfFormComponent implements OnInit {
       this._snackBar.open(this.fileName + " already exists !!", "Ok");
       return;
     }
-
 
     // Upload the file to the server
     this.supabase.storage.from("pdfs").upload(this.fileName, this.file).then((response) => {
