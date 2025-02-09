@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,6 +21,7 @@ export class SignUpComponent implements OnInit {
 
   spinner = inject(NgxSpinnerService);
   router = inject(Router);
+  _snackBar = inject(MatSnackBar);
 
   constructor() {
     this.supabase = SupabaseSingleton.getInstance();
@@ -61,14 +63,17 @@ export class SignUpComponent implements OnInit {
 
     this.spinner.show('full');
 
+    const redirectURL = environment.url + "login";
     const { data, error } = await this.supabase.auth.signUp({
       ...this.signUpForm.getRawValue() as LoginCredentials, options: {
-        emailRedirectTo: environment.url + "login"
+        emailRedirectTo: redirectURL
       }
     });
 
+
     if (!error) {
       this.spinner.hide('full');
+      this._snackBar.open("Confirmation link is sent on email", "Ok");
     }
   }
 
