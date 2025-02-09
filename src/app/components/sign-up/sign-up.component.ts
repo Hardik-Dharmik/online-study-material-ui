@@ -1,8 +1,11 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { LoginCredentials } from '../login-form/login-form.component';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { SupabaseSingleton } from 'src/app/classes/Supabase';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,10 +16,14 @@ export class SignUpComponent implements OnInit {
 
   signUpForm!: UntypedFormGroup;
   errorMessage = signal('');
+  supabase: SupabaseClient;
 
-  constructor(
-    private router: Router,
-  ) {
+  spinner = inject(NgxSpinnerService);
+  router = inject(Router);
+
+  constructor() {
+    this.supabase = SupabaseSingleton.getInstance();
+
   }
 
   ngOnInit() {
@@ -47,8 +54,22 @@ export class SignUpComponent implements OnInit {
     return 'Password is required';
   }
 
-  login() {
+  async signUp() {
+    if (this.signUpForm.invalid) {
+      return;
+    }
 
+    this.spinner.show('full');
+
+    const { data, error } = await this.supabase.auth.signUp({
+      ...this.signUpForm.getRawValue() as LoginCredentials, options: {
+        emailRedirectTo: environment.url + "login"
+      }
+    });
+
+    if (!error) {
+      this.spinner.hide('full');
+    }
   }
 
   goToLogin() {
