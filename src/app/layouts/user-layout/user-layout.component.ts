@@ -5,6 +5,7 @@ import { SupabaseSingleton } from 'src/app/classes/Supabase';
 import { SidebarMenu } from '../sidebar/routes.constant';
 import { UserService } from 'src/app/services/user/user.service';
 import { fillerNav } from 'src/app/constants/sidebar-menus.constant';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 @Component({
   selector: 'app-user-layout',
@@ -37,10 +38,17 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.supabase = SupabaseSingleton.getInstance();
     this.email = JSON.parse(localStorage.getItem('user') || '{}').user.email;
+    this.getDeviceId().then((deviceId) => { console.log(deviceId); });
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  async getDeviceId() {
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+    return result.visitorId;
   }
 
   async logout() {

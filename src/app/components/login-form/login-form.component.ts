@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 import { NgxSpinnerService } from "ngx-spinner";
-
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 export interface LoginCredentials {
   email: string;
@@ -77,16 +77,39 @@ export class LoginFormComponent implements OnInit {
     this.spinner.show('full');
 
     const { data, error } = await this.supabase.auth.signInWithPassword(this.loginForm.getRawValue() as LoginCredentials);
+    if (error) {
+      console.error('Login error:', error);
+      return;
+    }
+    const deviceId = await this.getDeviceId();
+    const { data: sessions, error: sessionError } = await this.supabase
+      .from('sessions')
+      .select('device_id')
+      .eq('user_id', data.user.id);
 
-    localStorage.setItem("user", JSON.stringify(data));
+    if (sessionError) {
+      console.error('Error fetching sessions:', sessionError);
+      return;
+    }
 
-    if (!error) {
+    if (sessions && sessions.some((session: any) => session.device_id === deviceId)) {
+      localStorage.setItem("user", JSON.stringify(data));
+      console.log('Login successful!');
       this.spinner.hide('full');
       this.router.navigate(['/dashboard']);
+    } else {
+      console.log('Login denied: Different device detected.');
+      // Handle denied login
     }
   }
 
   gotoSignUp() {
     this.router.navigate(['/signup']);
+  }
+
+  async getDeviceId() {
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+    return result.visitorId;
   }
 }

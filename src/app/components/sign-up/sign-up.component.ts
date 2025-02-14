@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -70,12 +71,32 @@ export class SignUpComponent implements OnInit {
       }
     });
 
+    if (data?.user?.id) {
+      await this.storeSession(data.user.id);
+    }
 
     if (!error) {
       this.spinner.hide('full');
       this._snackBar.open("Confirmation link is sent on email", "Ok");
     }
   }
+
+  async storeSession(userId: string) {
+    const deviceId = await this.getDeviceId();
+    const { data, error } = await this.supabase
+      .from('sessions')
+      .insert([{ user_id: userId, device_id: deviceId }]);
+    if (error) {
+      console.error('Error storing session:', error);
+    }
+  }
+
+  async getDeviceId() {
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+    return result.visitorId;
+  }
+
 
   goToLogin() {
     this.router.navigate(['/login']);
