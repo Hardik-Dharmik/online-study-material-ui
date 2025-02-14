@@ -11,8 +11,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PdfFormComponent } from './components/pdfs/pdf-form/pdf-form.component';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 
 const routes: Routes = [
+  {
+    path: "email-confirm",
+    component: EmailConfirmationComponent
+  },
   {
     path: '',
     pathMatch: 'full',

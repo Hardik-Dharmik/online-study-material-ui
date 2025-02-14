@@ -25,9 +25,10 @@ import { ExamplePdfViewerComponent } from './example-pdf-viewer/example-pdf-view
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent, PdfFormComponent, AllPdfTableComponent, AllPdfListComponent, PdfExpansionContentComponent, PdfPreviewDialogComponent, ExamplePdfViewerComponent, SidebarComponent],
+  declarations: [AppComponent, LoginFormComponent, UserLayoutComponent, UserDashboardComponent, AllPdfsComponent, SubjectsComponent, ClassesComponent, SignUpComponent, ProfileComponent, PdfFormComponent, AllPdfTableComponent, AllPdfListComponent, PdfExpansionContentComponent, PdfPreviewDialogComponent, ExamplePdfViewerComponent, SidebarComponent, EmailConfirmationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

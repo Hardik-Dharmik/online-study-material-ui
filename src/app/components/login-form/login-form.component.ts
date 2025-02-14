@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { SupabaseSingleton } from 'src/app/classes/Supabase';
 import { NgxSpinnerService } from "ngx-spinner";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface LoginCredentials {
   email: string;
@@ -27,6 +28,7 @@ export class LoginFormComponent implements OnInit {
 
   spinner = inject(NgxSpinnerService);
   router = inject(Router);
+  _snackBar = inject(MatSnackBar);
 
   constructor(
   ) {
@@ -91,15 +93,16 @@ export class LoginFormComponent implements OnInit {
       console.error('Error fetching sessions:', sessionError);
       return;
     }
-
-    if (sessions && sessions.some((session: any) => session.device_id === deviceId)) {
+    console.log(sessions);
+    if (sessions && sessions[0].device_id === deviceId) {
       localStorage.setItem("user", JSON.stringify(data));
       console.log('Login successful!');
       this.spinner.hide('full');
       this.router.navigate(['/dashboard']);
     } else {
+      this.spinner.hide('full');
       console.log('Login denied: Different device detected.');
-      // Handle denied login
+      this._snackBar.open("Credentials can't be used on multiple devices", "Ok");
     }
   }
 

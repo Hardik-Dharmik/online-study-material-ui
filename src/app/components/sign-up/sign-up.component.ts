@@ -64,14 +64,14 @@ export class SignUpComponent implements OnInit {
 
     this.spinner.show('full');
 
-    const redirectURL = environment.url + "login";
+    const redirectURL = environment.url + "email-confirm";
     const { data, error } = await this.supabase.auth.signUp({
       ...this.signUpForm.getRawValue() as LoginCredentials, options: {
         emailRedirectTo: redirectURL
       }
     });
 
-    if (data?.user?.id) {
+    if (!error && data?.user?.id) {
       await this.storeSession(data.user.id);
     }
 
